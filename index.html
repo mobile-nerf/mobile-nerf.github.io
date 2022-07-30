@@ -1,0 +1,455 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>MobileNeRF</title>
+</head>
+
+<style>
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.previewImgWrapper {
+  position: relative;
+  padding-bottom: 100%;
+  height: 0;
+}
+.previewImgWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.teaserImgWrapper {
+  position: relative;
+  padding-bottom: 34.35%;
+  height: 0;
+}
+.teaserImgWrapper img {
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+}
+.renderingImgWrapper {
+  position: relative;
+  padding-bottom: 24.89%;
+  height: 0;
+}
+.renderingImgWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.trainImgWrapper {
+  position: relative;
+  padding-bottom: 19.12%;
+  height: 0;
+}
+.trainImgWrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+
+<body>
+<div style="align:center; font-family:Arial; position:absolute; left:10%; right:10%">
+
+<div style="text-align:center; font-size:36;">
+<br><br>
+MobileNeRF: Exploiting the Polygon Rasterization Pipeline <br>
+for Eﬀicient Neural Field Rendering on Mobile Architectures
+<br><br>
+</div>
+
+<div align="center">
+<table style="text-align:center;">
+<tr align="center" style="font-size:24;">
+	<td align="center" >
+		<a href="https://czq142857.github.io/" style="text-decoration: none">Zhiqin Chen<sup>1,2</sup></a>
+	</td>
+	<td align="center" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td align="center" >
+		<a href="https://www.cs.princeton.edu/~funk/" style="text-decoration: none">Thomas Funkhouser<sup>1</sup></a>
+	</td>
+	<td align="center" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td align="center" >
+		<a href="https://phogzone.com/" style="text-decoration: none">Peter Hedman<sup>1</sup></a>
+	</td>
+	<td align="center" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td align="center" >
+		<a href="https://taiya.github.io/" style="text-decoration: none">Andrea Tagliasacchi<sup>1,2</sup></a>
+	</td>
+</tr>
+<tr align="center" style="font-size:20;">
+	<td align="center" >
+	</td>
+</tr>
+<tr align="center" style="font-size:20;">
+	<td align="center" >
+	</td>
+	<td align="center" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td align="center" >
+		<a href="https://research.google/" style="text-decoration: none">Google Research<sup>1</sup></a>
+	</td>
+	<td align="center" > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>
+	<td align="center" >
+		<a href="https://www.sfu.ca/" style="text-decoration: none">Simon Fraser University<sup>2</sup></a>
+	</td>
+</tr>
+</table>
+<br><br>
+</div>
+
+<div style="text-align:center; font-size:24; position:relative; top:20px">
+<a href="xxxxxx" style="text-decoration: none">Paper</a>
+&nbsp;&nbsp; | &nbsp;&nbsp;
+<span style="color: #c0c0c0">Video</span>
+&nbsp;&nbsp; | &nbsp;&nbsp;
+<span style="color: #c0c0c0">Code</span>
+<br><br>
+
+<div style="text-align:center; font-size:24; line-height:200%;">
+We present a NeRF that can run on a variety of common devices in real time.
+</div>
+<div class="teaserImgWrapper">
+<img src="image/teaser2_img.jpg"/>
+</div>
+
+
+
+
+<div style="text-align:center; font-size:36;">
+- Abstract -
+<br><br>
+</div>
+
+<div style="text-align:justify; font-size:24; line-height:200%;">
+Neural Radiance Fields (NeRFs) have demonstrated amazing ability to synthesize images of 3D scenes from novel views. However, they rely upon specialized volumetric rendering algorithms based on ray marching that are mismatched to the capabilities of widely deployed graphics hardware. This paper introduces a new NeRF representation based on textured polygons that can synthesize novel images eﬀiciently with standard rendering pipelines. The NeRF is represented as a set of polygons with textures representing binary opacities and feature vectors. Traditional rendering of the polygons with a z-buffer yields an image with features at every pixel, which are interpreted by a small, view-dependent MLP running in a fragment shader to produce a final pixel color. This approach enables NeRFs to be rendered with the traditional polygon rasterization pipeline, which provides massive pixel-level parallelism, achieving interactive frame rates on a wide range of compute platforms, including mobile phones.
+</div>
+
+
+
+<div style="text-align:center; font-size:36;">
+<br><br>
+- Real-Time Interactive Viewer Demos -
+<br><br>
+</div>
+
+<div style="text-align:center; font-size:28; line-height:200%;">
+<span style="color: #808080">-- Instructions --</span>
+</div>
+<div style="text-align:justify; font-size:24; line-height:200%;">
+<b>Mouse users</b>: left button to rotate; right button to pan (especially on forward-facing scenes); scroll wheel to zoom.
+<br>
+<b>Finger users</b>: one-finger touch to rotate (on 360&#176; scenes) or pan (on forward-facing scenes); two-finger touch to pan and zoom.
+<br><br>
+</div>
+
+<div style="text-align:center; font-size:28; line-height:200%;">
+<span style="color: #808080">-- Synthetic 360&#176; scenes --</span>
+</div>
+
+<div align="center">
+<table style="text-align:center; width:100%">
+<tr align="center" style="font-size:24;">
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=chair" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_chair.jpg"/>
+			</div>
+			<b>Chair</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=drums" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_drums.jpg"/>
+			</div>
+			<b>Drums</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=ficus" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_ficus.jpg"/>
+			</div>
+			<b>Ficus</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=hotdog" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_hotdog.jpg"/>
+			</div>
+			<b>Hotdog</b>
+		</a>
+	</td>
+</tr>
+<tr align="center" style="font-size:24;">
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=lego" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_lego.jpg"/>
+			</div>
+			<b>Lego</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=materials" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_materials.jpg"/>
+			</div>
+			<b>Materials</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=mic" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_mic.jpg"/>
+			</div>
+			<b>Mic</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_syn_mac.html?obj=ship" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_ship.jpg"/>
+			</div>
+			<b>Ship</b>
+		</a>
+	</td>
+</tr>
+</table>
+</div>
+
+
+
+<div style="text-align:center; font-size:28; line-height:200%;">
+<br>
+<span style="color: #808080">-- Forward-facing scenes --</span>
+</div>
+
+<div align="center">
+<table style="text-align:center; width:100%">
+<tr align="center" style="font-size:24;">
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=fern" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_fern.jpg"/>
+			</div>
+			<b>Fern</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=flower" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_flower.jpg"/>
+			</div>
+			<b>Flower</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=fortress" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_fortress.jpg"/>
+			</div>
+			<b>Fortress</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=horns" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_horns.jpg"/>
+			</div>
+			<b>Horns</b>
+		</a>
+	</td>
+</tr>
+<tr align="center" style="font-size:24;">
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=leaves" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_leaves.jpg"/>
+			</div>
+			<b>Leaves</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=orchids" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_orchids.jpg"/>
+			</div>
+			<b>Orchids</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=room" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_room.jpg"/>
+			</div>
+			<b>Room</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_ff_mac.html?obj=trex" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_trex.jpg"/>
+			</div>
+			<b>Trex</b>
+		</a>
+	</td>
+</tr>
+</table>
+</div>
+
+
+
+<div style="text-align:center; font-size:28; line-height:200%;">
+<br>
+<span style="color: #808080">-- Unbounded 360&#176; scenes --</span>
+</div>
+
+<div align="center">
+<table style="text-align:center; width:100%">
+<tr align="center" style="font-size:24;">
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_r_mac.html?obj=bicycle" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_bicycle.jpg"/>
+			</div>
+			<b>Bicycle</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_r_mac.html?obj=gardenvase" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_gardenvase.jpg"/>
+			</div>
+			<b>Garden</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+		<a href="https://storage.googleapis.com/jax3d-public/projects/mobilenerf/mobilenerf_viewer_mac/zdeferred_r_mac.html?obj=stump" style="text-decoration: none">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_stump.jpg"/>
+			</div>
+			<b>Stump</b>
+		</a>
+	</td>
+	<td align="center" style="width:25%">
+			<br>
+			<div class="previewImgWrapper">
+				<img src="image/preview_flowerbed_treehill.jpg"/>
+			</div>
+			<span style="color: #c0c0c0"><b>Flower &#38; Treehill</b></span>
+	</td>
+</tr>
+</table>
+</div>
+
+
+
+<div style="text-align:center; font-size:36;">
+<br><br>
+- Method -
+<br><br>
+</div>
+
+
+<div class="renderingImgWrapper">
+<img src="image/overview_rendering_img.jpg"/>
+</div>
+
+<div style="text-align:justify; font-size:24; line-height:200%;">
+<br>
+<b>Rendering.</b>
+We represent the scene as a triangle mesh textured by deep features.
+We first rasterize the mesh to a deferred rendering buffer.
+For each visible fragment, we execute a neural deferred shader that converts the feature and view direction to the corresponding output pixel color.
+<br><br>
+</div>
+
+<div class="trainImgWrapper">
+<img src="image/overview_train_img.png"/>
+</div>
+
+<div style="text-align:justify; font-size:24; line-height:200%;">
+<br>
+<b>Training.</b>
+We initialize the mesh as a regular grid, and use MLPs to represent the features and opacity for any point on the mesh.
+For each ray, we compute its intersection points on the mesh, and alpha-composite the colors of those points with respect to their opacity to obtain the output color.
+In a later training stage, we enforce binary alpha values, and perform super-sampling on features for anti-aliasing.
+Finally, we extract the triangle mesh and bake the features and opacity into texture images.
+<br><br>
+</div>
+
+
+
+
+
+<div style="text-align:center; font-size:36;">
+<br><br>
+- Citing this work -
+<br><br>
+</div>
+
+<div style="text-align:center; font-size:24; line-height:200%;">
+If you find this work useful in your research, please consider citing:
+<br><br>
+</div>
+
+<div align="center" style="background-color:#F0F0F0;">
+<div style="width:800px; text-align:left; font-size:16; line-height:100%;">
+<br>
+<pre><code>@article{chen2022mobilenerf,
+  title={MobileNeRF: Exploiting the Polygon Rasterization Pipeline
+	for Eﬀicient Neural Field Rendering on Mobile Architectures},
+  author={Zhiqin Chen and Thomas Funkhouser and Peter Hedman and Andrea Tagliasacchi},
+  journal={arXiv preprint arXiv:xxxx.xxxx},
+  year={2022}
+}</code></pre>
+<br>
+</div>
+</div>
+
+<br><br><br><br><br><br><br><br>
+
+</div>
+</body>
+</html>
