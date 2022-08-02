@@ -74,7 +74,7 @@
 <div style="text-align:center; font-size:36;">
 <br><br>
 MobileNeRF: Exploiting the Polygon Rasterization Pipeline <br>
-for Eﬀicient Neural Field Rendering on Mobile Architectures
+for Efficient Neural Field Rendering on Mobile Architectures
 <br><br>
 </div>
 
@@ -141,7 +141,7 @@ We present a NeRF that can run on a variety of common devices in real time.
 </div>
 
 <div style="text-align:justify; font-size:24; line-height:200%;">
-Neural Radiance Fields (NeRFs) have demonstrated amazing ability to synthesize images of 3D scenes from novel views. However, they rely upon specialized volumetric rendering algorithms based on ray marching that are mismatched to the capabilities of widely deployed graphics hardware. This paper introduces a new NeRF representation based on textured polygons that can synthesize novel images eﬀiciently with standard rendering pipelines. The NeRF is represented as a set of polygons with textures representing binary opacities and feature vectors. Traditional rendering of the polygons with a z-buffer yields an image with features at every pixel, which are interpreted by a small, view-dependent MLP running in a fragment shader to produce a final pixel color. This approach enables NeRFs to be rendered with the traditional polygon rasterization pipeline, which provides massive pixel-level parallelism, achieving interactive frame rates on a wide range of compute platforms, including mobile phones.
+Neural Radiance Fields (NeRFs) have demonstrated amazing ability to synthesize images of 3D scenes from novel views. However, they rely upon specialized volumetric rendering algorithms based on ray marching that are mismatched to the capabilities of widely deployed graphics hardware. This paper introduces a new NeRF representation based on textured polygons that can synthesize novel images efficiently with standard rendering pipelines. The NeRF is represented as a set of polygons with textures representing binary opacities and feature vectors. Traditional rendering of the polygons with a z-buffer yields an image with features at every pixel, which are interpreted by a small, view-dependent MLP running in a fragment shader to produce a final pixel color. This approach enables NeRFs to be rendered with the traditional polygon rasterization pipeline, which provides massive pixel-level parallelism, achieving interactive frame rates on a wide range of compute platforms, including mobile phones.
 </div>
 
 
@@ -441,7 +441,7 @@ If you find this work useful in your research, please consider citing:
 <br>
 <pre><code>@article{chen2022mobilenerf,
   title={MobileNeRF: Exploiting the Polygon Rasterization Pipeline
-	for Eﬀicient Neural Field Rendering on Mobile Architectures},
+	for Efficient Neural Field Rendering on Mobile Architectures},
   author={Zhiqin Chen and Thomas Funkhouser
 	and Peter Hedman and Andrea Tagliasacchi},
   journal={arXiv preprint arXiv:2208.00277},
